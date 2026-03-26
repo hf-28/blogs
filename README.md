@@ -1,3 +1,3 @@
 ## 📝 Articles
 - [View Articles Page](https://hf-28.github.io/blogs/)
-- [Beno](https://hf-28.github.io/blogs/images/beno.html)
+- [Beno](https://hf-28.github.io/blogs/beno/beno.html)
