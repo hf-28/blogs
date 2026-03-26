@@ -1,0 +1,619 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BENO – Luxury At Your Service</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --gold:#00586F;--gold-l:#00a8c8;--gold-d:#003d4f;
+    --dark:#040d10;--dark2:#071217;--dark3:#0a1a20;--dark4:#0d2028;
+    --text:#e8f4f8;--muted:#5a8a96;--border:rgba(0,88,111,0.18);
+  }
+  html{scroll-behavior:smooth;}
+  body{background:var(--dark);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;overflow-x:hidden;}
+
+  /* HERO */
+  .hero{
+    min-height:100vh;
+    background:radial-gradient(ellipse at 50% 0%,#001e26 0%,#040d10 65%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:60px 20px 80px;position:relative;overflow:hidden;
+  }
+  .hero-grid{
+    position:absolute;inset:0;
+    background-image:linear-gradient(rgba(0,88,111,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(0,88,111,0.07) 1px,transparent 1px);
+    background-size:60px 60px;
+  }
+  .hero-glow{position:absolute;top:-10%;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(ellipse,rgba(0,88,111,0.18) 0%,transparent 70%);pointer-events:none;}
+  .hero-logo{
+    width:88px;height:88px;border-radius:22px;
+    background:linear-gradient(135deg,#00586F,#003d4f);
+    display:flex;align-items:center;justify-content:center;
+    font-size:2rem;font-weight:900;color:#fff;letter-spacing:1px;
+    box-shadow:0 0 0 1px rgba(0,168,200,0.3),0 8px 40px rgba(0,88,111,0.5);
+    margin-bottom:28px;position:relative;z-index:1;
+  }
+  .hero h1{font-size:clamp(3rem,8vw,6rem);letter-spacing:12px;color:var(--gold-l);font-weight:800;position:relative;z-index:1;text-transform:uppercase;}
+  .hero-sub{color:#4a9aaa;font-size:clamp(0.8rem,2vw,1rem);letter-spacing:4px;text-transform:uppercase;margin:12px 0 10px;position:relative;z-index:1;}
+  .hero-desc{color:var(--muted);font-size:0.95rem;max-width:480px;line-height:1.8;margin:14px auto 40px;position:relative;z-index:1;}
+  .badges{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;}
+  .badge{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.25);border-radius:14px;padding:11px 22px;text-decoration:none;color:var(--text);transition:all .3s;backdrop-filter:blur(8px);}
+  .badge:hover{background:rgba(201,168,76,0.12);border-color:var(--gold);transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,168,76,0.18);}
+  .badge svg{width:24px;height:24px;}
+  .badge-text small{font-size:0.6rem;color:var(--muted);display:block;text-transform:uppercase;letter-spacing:1px;}
+  .badge-text strong{font-size:0.95rem;}
+
+  /* SECTION WRAPPER */
+  .sec{padding:90px 20px;max-width:1100px;margin:0 auto;}
+  .sec-label{font-size:0.7rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+  .sec-title{font-size:clamp(1.6rem,4vw,2.5rem);color:var(--text);margin-bottom:12px;font-weight:700;}
+  .sec-desc{color:var(--muted);max-width:560px;line-height:1.8;font-size:0.9rem;}
+  .divider{width:48px;height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin:18px 0 28px;}
+
+  /* FEATURES GRID */
+  .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-top:50px;}
+  .feat-card{background:var(--dark2);padding:32px 28px;transition:background .25s;position:relative;overflow:hidden;}
+  .feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.3),transparent);opacity:0;transition:opacity .25s;}
+  .feat-card:hover{background:var(--dark3);}
+  .feat-card:hover::before{opacity:1;}
+  .feat-icon{font-size:2rem;margin-bottom:16px;}
+  .feat-card h3{color:var(--gold-l);font-size:1rem;margin-bottom:8px;font-weight:600;}
+  .feat-card p{color:var(--muted);font-size:0.85rem;line-height:1.7;}
+  .feat-badge{display:inline-block;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);color:var(--gold);font-size:0.65rem;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:20px;margin-bottom:10px;}
+
+  /* SCREENSHOTS */
+  .screens-section{background:linear-gradient(180deg,var(--dark) 0%,#0a0d16 50%,var(--dark) 100%);padding:100px 20px;}
+  .screens-inner{max-width:1000px;margin:0 auto;}
+  .screens-header{text-align:center;margin-bottom:60px;}
+  .screens-row{display:flex;align-items:flex-end;justify-content:center;gap:16px;flex-wrap:wrap;}
+  .screen-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;}
+  .screen-label{font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);opacity:.7;}
+  .phone-frame{
+    width:200px;border-radius:38px;overflow:hidden;
+    box-shadow:0 0 0 8px #161b27,0 0 0 9px #1e2538,0 24px 60px rgba(0,0,0,.8),0 0 50px rgba(201,168,76,.12);
+    background:#0d0f1a;position:relative;
+  }
+  .phone-frame.main{width:220px;box-shadow:0 0 0 8px #1a1f30,0 0 0 9px #232940,0 32px 80px rgba(0,0,0,.9),0 0 70px rgba(201,168,76,.2);}
+  .phone-notch{height:26px;background:#0a0c14;display:flex;align-items:center;justify-content:center;}
+  .notch-pill{width:70px;height:18px;background:#070910;border-radius:20px;}
+  .phone-screen{background:var(--dark2);}
+  .screen-img{width:100%;display:block;object-fit:cover;}
+  .screen-placeholder{
+    width:100%;aspect-ratio:9/17;
+    background:linear-gradient(160deg,#0d1117 0%,#111827 100%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+    position:relative;overflow:hidden;
+  }
+  .screen-placeholder::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,0.04) 0%,transparent 60%);}
+  .sp-icon{font-size:1.8rem;opacity:.5;}
+  .sp-text{font-size:0.6rem;color:var(--muted);text-align:center;padding:0 16px;opacity:.7;letter-spacing:1px;}
+  .phone-home-bar{height:20px;background:#0a0c14;display:flex;align-items:center;justify-content:center;}
+  .home-bar-line{width:50px;height:3px;background:#2a2e40;border-radius:3px;}
+
+  /* TECH STACK */
+  .tech-section{background:var(--dark2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+  .tech-diagram{margin-top:50px;position:relative;}
+
+  /* SVG tech drawing */
+  .tech-svg-wrap{width:100%;overflow:hidden;border-radius:16px;background:var(--dark);border:1px solid var(--border);}
+
+  /* ARCH LAYERS */
+  .arch-wrap{margin-top:48px;display:flex;flex-direction:column;gap:1px;border-radius:16px;overflow:hidden;border:1px solid var(--border);}
+  .arch-layer{display:flex;align-items:stretch;min-height:72px;}
+  .arch-layer-label{
+    width:140px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+    font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;
+    padding:12px 16px;text-align:center;border-right:1px solid var(--border);
+  }
+  .arch-layer-content{flex:1;display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:16px 20px;background:var(--dark2);}
+  .arch-chip{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:5px 12px;border-radius:20px;font-size:0.72rem;font-weight:600;
+    border:1px solid;letter-spacing:0.3px;white-space:nowrap;
+  }
+  .arch-chip-dot{width:6px;height:6px;border-radius:50%;}
+  /* Layer colors */
+  .al-ui{background:#0c1f38;color:#38bdf8;border-color:#0ea5e920;}
+  .al-ui .arch-layer-label{background:#071426;color:#38bdf8;}
+  .al-kmm{background:#061c0c;color:#4ade80;border-color:#22c55e20;}
+  .al-kmm .arch-layer-label{background:#040f06;color:#4ade80;}
+  .al-data{background:#1a0e2d;color:#a78bfa;border-color:#7c3aed20;}
+  .al-data .arch-layer-label{background:#0f0720;color:#a78bfa;}
+  .al-infra{background:#1c1000;color:#fb923c;border-color:#f9731620;}
+  .al-infra .arch-layer-label{background:#100a00;color:#fb923c;}
+  /* chips */
+  .c-compose{background:#0c1f38;color:#38bdf8;border-color:#0ea5e940;}
+  .c-swiftui{background:#1c0a1c;color:#e879f9;border-color:#a855f740;}
+  .c-kmm{background:#061c0c;color:#4ade80;border-color:#22c55e40;}
+  .c-ktor{background:#0a1f1a;color:#2dd4bf;border-color:#14b8a640;}
+  .c-sqldelight{background:#1a0e2d;color:#a78bfa;border-color:#7c3aed40;}
+  .c-koin{background:#1a1000;color:#fbbf24;border-color:#f59e0b40;}
+  .c-coroutines{background:#061c0c;color:#86efac;border-color:#22c55e40;}
+  .c-kotlin{background:#160e2d;color:#c4b5fd;border-color:#8b5cf640;}
+  .c-serial{background:#0a1f1a;color:#5eead4;border-color:#14b8a640;}
+  .c-mvi{background:#1c0a0a;color:#fca5a5;border-color:#ef444440;}
+
+  /* LIB CARDS */
+  .lib-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:48px;}
+  .lib-card{background:var(--dark2);border:1px solid var(--border);border-radius:14px;padding:22px 20px;transition:all .25s;}
+  .lib-card:hover{border-color:rgba(201,168,76,0.3);background:var(--dark3);}
+  .lib-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .lib-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;}
+  .lib-name{font-size:0.85rem;font-weight:700;color:var(--text);}
+  .lib-ver{font-size:0.65rem;color:var(--muted);margin-top:1px;}
+  .lib-desc{font-size:0.78rem;color:var(--muted);line-height:1.6;}
+
+  /* REVIEWS */
+  .reviews-bg{background:var(--dark3);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+  .reviews-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:44px;}
+  .rev-card{background:var(--dark2);border:1px solid var(--border);border-radius:14px;padding:24px;transition:all .25s;}
+  .rev-card:hover{border-color:rgba(201,168,76,0.25);}
+  .rev-stars{color:var(--gold);font-size:0.85rem;letter-spacing:2px;margin-bottom:12px;}
+  .rev-text{color:#94a3b8;font-size:0.85rem;line-height:1.75;font-style:italic;}
+  .rev-meta{margin-top:16px;font-size:0.72rem;color:var(--gold);display:flex;align-items:center;gap:6px;}
+  .rev-platform{background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.15);border-radius:20px;padding:1px 8px;font-size:0.6rem;}
+
+  /* UPDATES */
+  .updates-list{margin-top:40px;}
+  .upd{display:flex;gap:20px;padding:18px 0;border-bottom:1px solid rgba(201,168,76,0.06);}
+  .upd:last-child{border-bottom:none;}
+  .upd-ver{min-width:100px;font-size:0.7rem;color:var(--gold);letter-spacing:1px;padding-top:2px;}
+  .upd-ver span{display:block;font-size:0.65rem;color:var(--muted);margin-top:3px;}
+  .upd-body{color:#94a3b8;font-size:0.85rem;line-height:1.65;}
+  .upd-tag{display:inline-block;background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.15);color:#4ade80;font-size:0.6rem;padding:1px 7px;border-radius:20px;margin-right:5px;text-transform:uppercase;letter-spacing:1px;}
+
+  /* CTA */
+  .cta{background:linear-gradient(135deg,#070a0f 0%,#0d1200 50%,#070a0f 100%);padding:100px 20px;text-align:center;border-top:1px solid var(--border);}
+  .cta h2{font-size:clamp(1.8rem,4vw,2.8rem);color:var(--gold-l);margin-bottom:14px;letter-spacing:3px;text-transform:uppercase;font-weight:800;}
+  .cta p{color:var(--muted);margin-bottom:44px;font-size:0.9rem;}
+  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+  .cta-btn{display:flex;align-items:center;gap:10px;padding:14px 28px;border-radius:14px;text-decoration:none;font-size:0.9rem;font-weight:700;transition:all .3s;}
+  .cta-btn.primary{background:linear-gradient(135deg,var(--gold),var(--gold-d));color:#000;box-shadow:0 8px 28px rgba(201,168,76,0.3);}
+  .cta-btn.primary:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(201,168,76,0.45);}
+  .cta-btn.outline{background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.25);color:var(--text);}
+  .cta-btn.outline:hover{background:rgba(201,168,76,0.08);border-color:var(--gold);transform:translateY(-2px);}
+  .cta-btn svg{width:22px;height:22px;}
+
+  footer{background:var(--dark);border-top:1px solid var(--border);padding:32px 20px;text-align:center;}
+  footer p{color:#334155;font-size:0.8rem;}
+  footer a{color:var(--gold);text-decoration:none;}
+
+  @media(max-width:640px){
+    .phone-frame{width:160px;}
+    .phone-frame.main{width:180px;}
+    .arch-layer{flex-direction:column;}
+    .arch-layer-label{width:100%;border-right:none;border-bottom:1px solid var(--border);}
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-logo">B</div>
+  <p class="hero-sub">Cars · Yachts · Helicopters · Buggy · Jet · Water</p>
+  <h1>BENO</h1>
+  <p class="hero-desc">Luxury rentals delivered by trained professionals. Book in under 2 minutes — crafted for your most extraordinary moments.</p>
+  <div class="badges">
+    <a href="https://apps.apple.com/us/app/beno-luxury-at-your-service/id1435298708" target="_blank" class="badge">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      <div class="badge-text"><small>Download on the</small><strong>App Store</strong></div>
+    </a>
+    <a href="https://play.google.com/store/apps/details?id=com.benoholding.beno" target="_blank" class="badge">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.24.99.21l12.46-7.2-2.63-2.63-10.82 9.62zm-1.84-20.3C1.12 3.8 1 4.17 1 4.58v14.84c0 .41.12.78.34 1.08l.06.05 8.31-8.31v-.2L1.4 3.4l-.06.06zm17.9 8.84l-2.39-1.38-2.95 2.95 2.95 2.95 2.41-1.4c.69-.4.69-1.05-.02-1.45v-.67zm-14.74 9.3L16.97 14 14.34 11.37 3.5 21.6z"/></svg>
+      <div class="badge-text"><small>Get it on</small><strong>Google Play</strong></div>
+    </a>
+  </div>
+</div>
+
+<!-- FEATURES / SERVICES -->
+<div style="background:var(--dark2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+<div class="sec">
+  <div class="sec-label">What We Offer</div>
+  <h2 class="sec-title">100+ Experiences</h2>
+  <div class="divider"></div>
+  <p class="sec-desc">From sun-kissed deserts to shimmering seas and open skies — every experience is curated with precision and passion.</p>
+
+  <div class="feat-grid" style="margin-top:50px;">
+    <div class="feat-card"><div class="feat-badge">Vehicles</div><div class="feat-icon">🏎️</div><h3>Exotic & Luxury Cars</h3><p>Lamborghini, Ferrari, Rolls-Royce and more. Economy to hypercar — with optional professional chauffeur service.</p></div>
+    <div class="feat-card"><div class="feat-badge">On Water</div><div class="feat-icon">⛵</div><h3>Yacht Charters</h3><p>Set sail on the Arabian Gulf. Intimate gatherings, sunset cruises, or corporate events aboard premium yachts.</p></div>
+    <div class="feat-card"><div class="feat-badge">Aerial</div><div class="feat-icon">🚁</div><h3>Helicopter Tours</h3><p>Witness Dubai's iconic skyline from the sky. Breathtaking aerial experiences that redefine luxury.</p></div>
+    <div class="feat-card"><div class="feat-badge">Adventure</div><div class="feat-icon">🏜️</div><h3>Desert Buggy Safari</h3><p>Conquer the golden dunes. Powerful buggies, adrenaline, and unforgettable golden-hour vistas.</p></div>
+    <div class="feat-card"><div class="feat-badge">Water Sports</div><div class="feat-icon">🏄</div><h3>Fun Water Activities</h3><p>Jet skis, flyboarding, banana boats and more for thrill-seekers and leisure lovers alike.</p></div>
+    <div class="feat-card"><div class="feat-badge">Sky</div><div class="feat-icon">✈️</div><h3>Private Jet</h3><p>Book private jet flights directly in-app. Empty legs, full charters — seamless booking at best prices.</p></div>
+    <div class="feat-card"><div class="feat-badge">Saved</div><div class="feat-icon">❤️</div><h3>Wishlist</h3><p>Save your favourite experiences and vehicles. Your curated luxury list, always at your fingertips.</p></div>
+    <div class="feat-card"><div class="feat-badge">New</div><div class="feat-icon">🌙</div><h3>Dark Theme</h3><p>A stunning dark interface with Liquid Glass UI on iOS 26 — designed for comfort and premium aesthetics.</p></div>
+    <div class="feat-card"><div class="feat-badge">Bilingual</div><div class="feat-icon">🌐</div><h3>Arabic & English</h3><p>Full RTL Arabic support alongside English. Switch seamlessly between languages anytime.</p></div>
+    <div class="feat-card"><div class="feat-badge">Smart</div><div class="feat-icon">💬</div><h3>AI Chat</h3><p>Chat directly with a Beno AI agent for personalized recommendations, instant support and booking help.</p></div>
+    <div class="feat-card"><div class="feat-badge">Bookings</div><div class="feat-icon">📋</div><h3>Manage Bookings</h3><p>Track, modify and review all your bookings in one place. Notifications, status updates, documents — all included.</p></div>
+    <div class="feat-card"><div class="feat-badge">Account</div><div class="feat-icon">👤</div><h3>Profile</h3><p>Your personal hub. Loyalty rewards, preferences, payment methods, and account settings.</p></div>
+  </div>
+</div>
+</div>
+
+<!-- APP SCREENSHOTS -->
+<div class="screens-section">
+  <div class="screens-inner">
+    <div class="screens-header">
+      <div class="sec-label" style="text-align:center">In Your Hands</div>
+      <h2 class="sec-title" style="text-align:center;font-size:clamp(1.6rem,4vw,2.4rem)">iOS & Android</h2>
+      <div class="divider" style="margin:18px auto 0;"></div>
+    </div>
+
+    <div class="screens-row">
+      <!-- Screen 1 -->
+      <div class="screen-wrap" style="margin-bottom:40px;">
+        <div class="screen-label">Wishlist</div>
+        <div class="phone-frame">
+          <div class="phone-notch"><div class="notch-pill"></div></div>
+          <div class="phone-screen">
+            <img src="/images/b/a4.png" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" class="screen-img" alt="Wishlist Screen"/>
+            <div class="screen-placeholder" style="display:none;"><div class="sp-icon">❤️</div><div class="sp-text">Wishlist Screen<br>/images/beno/wishlist.png</div></div>
+          </div>
+          <div class="phone-home-bar"><div class="home-bar-line"></div></div>
+        </div>
+      </div>
+
+      <!-- Screen 2 -->
+      <div class="screen-wrap" style="margin-bottom:20px;">
+        <div class="screen-label">Dark Theme</div>
+        <div class="phone-frame">
+          <div class="phone-notch"><div class="notch-pill"></div></div>
+          <div class="phone-screen">
+            <img src="/images/b/a5.png" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" class="screen-img" alt="Dark Theme Screen"/>
+            <div class="screen-placeholder" style="display:none;"><div class="sp-icon">🌙</div><div class="sp-text">Dark Theme Screen<br>/images/beno/dark-theme.png</div></div>
+          </div>
+          <div class="phone-home-bar"><div class="home-bar-line"></div></div>
+        </div>
+      </div>
+
+      <!-- Screen 3 — MAIN / HERO -->
+      <div class="screen-wrap">
+        <div class="screen-label">Home</div>
+        <div class="phone-frame main">
+          <div class="phone-notch"><div class="notch-pill"></div></div>
+          <div class="phone-screen">
+            <img src="/images/b/a6.png" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" class="screen-img" alt="Home Screen"/>
+            <div class="screen-placeholder" style="display:none;"><div class="sp-icon">🏠</div><div class="sp-text">Home Screen<br>/images/beno/home.png</div></div>
+          </div>
+          <div class="phone-home-bar"><div class="home-bar-line"></div></div>
+        </div>
+      </div>
+
+      <!-- Screen 4 -->
+      <div class="screen-wrap" style="margin-bottom:20px;">
+        <div class="screen-label">Arabic</div>
+        <div class="phone-frame">
+          <div class="phone-notch"><div class="notch-pill"></div></div>
+          <div class="phone-screen">
+            <img src="/images/b/a7.png" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" class="screen-img" alt="Arabic Screen"/>
+            <div class="screen-placeholder" style="display:none;"><div class="sp-icon">🌐</div><div class="sp-text">Arabic (AR) Screen<br>/images/beno/arabic.png</div></div>
+          </div>
+          <div class="phone-home-bar"><div class="home-bar-line"></div></div>
+        </div>
+      </div>
+
+      <!-- Screen 5 -->
+      <div class="screen-wrap" style="margin-bottom:40px;">
+        <div class="screen-label">Manage Booking</div>
+        <div class="phone-frame">
+          <div class="phone-notch"><div class="notch-pill"></div></div>
+          <div class="phone-screen">
+            <img src="/images/b/manage-booking.png" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" class="screen-img" alt="Manage Booking Screen"/>
+            <div class="screen-placeholder" style="display:none;"><div class="sp-icon">📋</div><div class="sp-text">Manage Booking<br>/images/beno/manage-booking.png</div></div>
+          </div>
+          <div class="phone-home-bar"><div class="home-bar-line"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="screens-row" style="margin-top:28px;">
+      <div class="screen-wrap">
+        <div class="screen-label">AI Chat</div>
+        <div class="phone-frame">
+          <div class="phone-notch"><div class="notch-pill"></div></div>
+          <div class="phone-screen">
+            <img src="/images/b/a8.png" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" class="screen-img" alt="AI Chat Screen"/>
+            <div class="screen-placeholder" style="display:none;"><div class="sp-icon">💬</div><div class="sp-text">AI Chat Screen<br>/images/beno/ai-chat.png</div></div>
+          </div>
+          <div class="phone-home-bar"><div class="home-bar-line"></div></div>
+        </div>
+      </div>
+      <div class="screen-wrap">
+        <div class="screen-label">Profile</div>
+        <div class="phone-frame main">
+          <div class="phone-notch"><div class="notch-pill"></div></div>
+          <div class="phone-screen">
+            <img src="/images/b/a9.png" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" class="screen-img" alt="Profile Screen"/>
+            <div class="screen-placeholder" style="display:none;"><div class="sp-icon">👤</div><div class="sp-text">Profile Screen<br>/images/beno/profile.png</div></div>
+          </div>
+          <div class="phone-home-bar"><div class="home-bar-line"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TECH STACK -->
+<div class="tech-section">
+<div class="sec">
+  <div class="sec-label">Built With Excellence</div>
+  <h2 class="sec-title">Technology Stack</h2>
+  <div class="divider"></div>
+  <p class="sec-desc">A fully Kotlin-first, Kotlin Multiplatform codebase powering both Android and iOS from a shared business layer.</p>
+
+  <!-- SVG Architecture Diagram -->
+  <div class="tech-svg-wrap" style="margin-top:50px;">
+    <svg viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#080b12;">
+      <defs>
+        <linearGradient id="gAndroid" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3ddc84" stop-opacity=".15"/><stop offset="100%" stop-color="#3ddc84" stop-opacity=".03"/></linearGradient>
+        <linearGradient id="gIOS" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#38bdf8" stop-opacity=".15"/><stop offset="100%" stop-color="#38bdf8" stop-opacity=".03"/></linearGradient>
+        <linearGradient id="gKMM" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00586f" stop-opacity=".22"/><stop offset="100%" stop-color="#00586f" stop-opacity=".04"/></linearGradient>
+        <linearGradient id="gLib" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#a78bfa" stop-opacity=".15"/><stop offset="100%" stop-color="#a78bfa" stop-opacity=".03"/></linearGradient>
+        <linearGradient id="gExt" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f59e0b" stop-opacity=".12"/><stop offset="100%" stop-color="#f59e0b" stop-opacity=".02"/></linearGradient>
+        <marker id="arr" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto"><polygon points="0 0, 6 2, 0 4" fill="#00a8c8" opacity=".7"/></marker>
+        <marker id="arr2" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto"><polygon points="0 0, 6 2, 0 4" fill="#4ade80" opacity=".5"/></marker>
+        <marker id="arr3" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto"><polygon points="0 0, 6 2, 0 4" fill="#f59e0b" opacity=".65"/></marker>
+      </defs>
+
+      <!-- Background grid -->
+      <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(0,88,111,0.06)" stroke-width="1"/></pattern>
+      <rect width="900" height="700" fill="url(#grid)"/>
+
+      <!-- Title -->
+      <text x="450" y="30" text-anchor="middle" fill="#00a8c8" font-size="11" font-family="'Segoe UI',sans-serif" font-weight="700" letter-spacing="4" opacity=".8">BENO — KMM ARCHITECTURE</text>
+
+      <!-- ══ ANDROID ══ -->
+      <rect x="30" y="50" width="200" height="180" rx="12" fill="url(#gAndroid)" stroke="#3ddc8440" stroke-width="1.5"/>
+      <text x="130" y="72" text-anchor="middle" fill="#3ddc84" font-size="10" font-family="'Segoe UI',sans-serif" font-weight="700" letter-spacing="2">ANDROID</text>
+      <rect x="50" y="84" width="160" height="26" rx="6" fill="#0d1f14" stroke="#3ddc8430" stroke-width="1"/>
+      <text x="130" y="101" text-anchor="middle" fill="#3ddc84" font-size="9.5" font-family="'Segoe UI',sans-serif">Jetpack Compose</text>
+      <rect x="50" y="117" width="160" height="26" rx="6" fill="#0d1f14" stroke="#3ddc8430" stroke-width="1"/>
+      <text x="130" y="134" text-anchor="middle" fill="#3ddc84" font-size="9.5" font-family="'Segoe UI',sans-serif">:androidApp</text>
+      <rect x="50" y="150" width="74" height="26" rx="6" fill="#0d1f14" stroke="#3ddc8430" stroke-width="1"/>
+      <text x="87" y="167" text-anchor="middle" fill="#86efac" font-size="9" font-family="'Segoe UI',sans-serif">:ui:feature</text>
+      <rect x="136" y="150" width="74" height="26" rx="6" fill="#0d1f14" stroke="#3ddc8430" stroke-width="1"/>
+      <text x="173" y="167" text-anchor="middle" fill="#86efac" font-size="9" font-family="'Segoe UI',sans-serif">:ui:design</text>
+      <rect x="50" y="183" width="160" height="26" rx="6" fill="#0d1f14" stroke="#3ddc8430" stroke-width="1"/>
+      <text x="130" y="200" text-anchor="middle" fill="#3ddc84" font-size="9.5" font-family="'Segoe UI',sans-serif">Koin DI (Android)</text>
+
+      <!-- ══ iOS ══ -->
+      <rect x="670" y="50" width="200" height="180" rx="12" fill="url(#gIOS)" stroke="#38bdf840" stroke-width="1.5"/>
+      <text x="770" y="72" text-anchor="middle" fill="#38bdf8" font-size="10" font-family="'Segoe UI',sans-serif" font-weight="700" letter-spacing="2">iOS</text>
+      <rect x="690" y="84" width="160" height="26" rx="6" fill="#071624" stroke="#38bdf830" stroke-width="1"/>
+      <text x="770" y="101" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-family="'Segoe UI',sans-serif">SwiftUI</text>
+      <rect x="690" y="117" width="160" height="26" rx="6" fill="#071624" stroke="#38bdf830" stroke-width="1"/>
+      <text x="770" y="134" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-family="'Segoe UI',sans-serif">iOS App</text>
+      <rect x="690" y="150" width="160" height="26" rx="6" fill="#071624" stroke="#38bdf830" stroke-width="1"/>
+      <text x="770" y="167" text-anchor="middle" fill="#7dd3fc" font-size="9" font-family="'Segoe UI',sans-serif">:kmm:shared (XCFramework)</text>
+      <rect x="690" y="183" width="160" height="26" rx="6" fill="#071624" stroke="#38bdf830" stroke-width="1"/>
+      <text x="770" y="200" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-family="'Segoe UI',sans-serif">Koin DI (iOS)</text>
+
+      <!-- ══ KMM BUSINESS ══ -->
+      <rect x="250" y="50" width="400" height="288" rx="12" fill="url(#gKMM)" stroke="#00586f40" stroke-width="1.5"/>
+      <text x="450" y="72" text-anchor="middle" fill="#00a8c8" font-size="10" font-family="'Segoe UI',sans-serif" font-weight="700" letter-spacing="2">KOTLIN MULTIPLATFORM (KMM)</text>
+      <rect x="268" y="84" width="118" height="26" rx="6" fill="#001820" stroke="#00586f35" stroke-width="1"/>
+      <text x="327" y="101" text-anchor="middle" fill="#4dd8ee" font-size="9.5" font-family="'Segoe UI',sans-serif">:kmm:feature:*</text>
+      <rect x="396" y="84" width="118" height="26" rx="6" fill="#001820" stroke="#00586f35" stroke-width="1"/>
+      <text x="455" y="101" text-anchor="middle" fill="#4dd8ee" font-size="9.5" font-family="'Segoe UI',sans-serif">:kmm:service:*</text>
+      <rect x="524" y="84" width="110" height="26" rx="6" fill="#001820" stroke="#00586f35" stroke-width="1"/>
+      <text x="579" y="101" text-anchor="middle" fill="#4dd8ee" font-size="9.5" font-family="'Segoe UI',sans-serif">:kmm:data:*</text>
+      <rect x="268" y="120" width="364" height="26" rx="6" fill="#000e14" stroke="#00586f28" stroke-width="1"/>
+      <text x="450" y="137" text-anchor="middle" fill="#38a8be" font-size="9.5" font-family="'Segoe UI',sans-serif">experience:* — car · yacht · buggy · aerial · jet · water (×13)</text>
+      <rect x="268" y="156" width="174" height="26" rx="6" fill="#0b1505" stroke="#4ade8030" stroke-width="1"/>
+      <text x="355" y="173" text-anchor="middle" fill="#4ade80" font-size="9.5" font-family="'Segoe UI',sans-serif">Kotlin Coroutines + Flow</text>
+      <rect x="452" y="156" width="180" height="26" rx="6" fill="#0b1505" stroke="#4ade8030" stroke-width="1"/>
+      <text x="542" y="173" text-anchor="middle" fill="#4ade80" font-size="9.5" font-family="'Segoe UI',sans-serif">MVI Architecture</text>
+      <rect x="268" y="192" width="174" height="26" rx="6" fill="#0a1a18" stroke="#2dd4bf30" stroke-width="1"/>
+      <text x="355" y="209" text-anchor="middle" fill="#2dd4bf" font-size="9.5" font-family="'Segoe UI',sans-serif">Ktor + kotlinx.serialization</text>
+      <rect x="452" y="192" width="180" height="26" rx="6" fill="#0a1a18" stroke="#2dd4bf30" stroke-width="1"/>
+      <text x="542" y="209" text-anchor="middle" fill="#2dd4bf" font-size="9.5" font-family="'Segoe UI',sans-serif">SQLDelight Database</text>
+      <rect x="268" y="228" width="364" height="26" rx="6" fill="#100c00" stroke="#fbbf2430" stroke-width="1"/>
+      <text x="450" y="245" text-anchor="middle" fill="#fbbf24" font-size="9.5" font-family="'Segoe UI',sans-serif">Koin Dependency Injection (Multiplatform)</text>
+      <rect x="268" y="264" width="364" height="26" rx="6" fill="#120010" stroke="#e879f930" stroke-width="1"/>
+      <text x="450" y="281" text-anchor="middle" fill="#e879f9" font-size="9.5" font-family="'Segoe UI',sans-serif">Analytics · Logger · Tracker  (cross-cutting)</text>
+
+      <!-- ══ KMM LIBRARY ══ -->
+      <rect x="80" y="365" width="740" height="76" rx="12" fill="url(#gLib)" stroke="#a78bfa30" stroke-width="1.5"/>
+      <text x="450" y="384" text-anchor="middle" fill="#a78bfa" font-size="10" font-family="'Segoe UI',sans-serif" font-weight="700" letter-spacing="2">KMM LIBRARY LAYER</text>
+      <rect x="100" y="393" width="96" height="22" rx="5" fill="#0f0720" stroke="#a78bfa28" stroke-width="1"/>
+      <text x="148" y="408" text-anchor="middle" fill="#c4b5fd" font-size="9" font-family="'Segoe UI',sans-serif">lib:network</text>
+      <rect x="204" y="393" width="96" height="22" rx="5" fill="#0f0720" stroke="#a78bfa28" stroke-width="1"/>
+      <text x="252" y="408" text-anchor="middle" fill="#c4b5fd" font-size="9" font-family="'Segoe UI',sans-serif">lib:cache</text>
+      <rect x="308" y="393" width="96" height="22" rx="5" fill="#0f0720" stroke="#a78bfa28" stroke-width="1"/>
+      <text x="356" y="408" text-anchor="middle" fill="#c4b5fd" font-size="9" font-family="'Segoe UI',sans-serif">lib:database</text>
+      <rect x="412" y="393" width="96" height="22" rx="5" fill="#0f0720" stroke="#a78bfa28" stroke-width="1"/>
+      <text x="460" y="408" text-anchor="middle" fill="#c4b5fd" font-size="9" font-family="'Segoe UI',sans-serif">lib:mvi</text>
+      <rect x="516" y="393" width="96" height="22" rx="5" fill="#0f0720" stroke="#a78bfa28" stroke-width="1"/>
+      <text x="564" y="408" text-anchor="middle" fill="#c4b5fd" font-size="9" font-family="'Segoe UI',sans-serif">lib:core:common</text>
+      <rect x="620" y="393" width="180" height="22" rx="5" fill="#0f0720" stroke="#a78bfa28" stroke-width="1"/>
+      <text x="710" y="408" text-anchor="middle" fill="#c4b5fd" font-size="9" font-family="'Segoe UI',sans-serif">lib:presentation:ui</text>
+
+      <!-- ══ CONNECTOR ARROWS (top layers) ══ -->
+      <line x1="230" y1="138" x2="250" y2="138" stroke="#00a8c8" stroke-width="1.2" stroke-opacity=".55" marker-end="url(#arr)"/>
+      <line x1="670" y1="138" x2="650" y2="138" stroke="#00a8c8" stroke-width="1.2" stroke-opacity=".55" marker-end="url(#arr)"/>
+      <line x1="450" y1="338" x2="450" y2="365" stroke="#a78bfa" stroke-width="1.2" stroke-opacity=".5" marker-end="url(#arr2)"/>
+      <line x1="320" y1="338" x2="290" y2="365" stroke="#a78bfa" stroke-width="1.2" stroke-opacity=".4" marker-end="url(#arr2)"/>
+      <line x1="580" y1="338" x2="610" y2="365" stroke="#a78bfa" stroke-width="1.2" stroke-opacity=".4" marker-end="url(#arr2)"/>
+
+      <!-- ══ EXTERNAL PROVIDERS LAYER ══ -->
+      <rect x="80" y="472" width="740" height="204" rx="14" fill="url(#gExt)" stroke="#f59e0b28" stroke-width="1.5"/>
+      <text x="450" y="492" text-anchor="middle" fill="#f59e0b" font-size="10" font-family="'Segoe UI',sans-serif" font-weight="700" letter-spacing="3">EXTERNAL PROVIDERS</text>
+
+      <!-- ── Payments group ── -->
+      <rect x="100" y="504" width="202" height="150" rx="10" fill="rgba(99,91,255,0.06)" stroke="#635bff30" stroke-width="1"/>
+      <text x="201" y="520" text-anchor="middle" fill="#8b86ff" font-size="9" font-family="'Segoe UI',sans-serif" font-weight="700" letter-spacing="2">PAYMENTS</text>
+      <!-- Stripe -->
+      <rect x="114" y="528" width="82" height="52" rx="8" fill="#0a0918" stroke="#635bff35" stroke-width="1"/>
+      <text x="155" y="546" text-anchor="middle" fill="#635bff" font-size="18" font-family="'Segoe UI',sans-serif" font-weight="900">S</text>
+      <text x="155" y="561" text-anchor="middle" fill="#8b86ff" font-size="8.5" font-family="'Segoe UI',sans-serif" font-weight="700">STRIPE</text>
+      <text x="155" y="572" text-anchor="middle" fill="#4a47a3" font-size="7.5" font-family="'Segoe UI',sans-serif">Cards · 3DS · ApplePay</text>
+      <!-- Network Intl -->
+      <rect x="206" y="528" width="82" height="52" rx="8" fill="#001820" stroke="#00586f35" stroke-width="1"/>
+      <text x="247" y="546" text-anchor="middle" fill="#00a8c8" font-size="18" font-family="'Segoe UI',sans-serif" font-weight="900">N</text>
+      <text x="247" y="561" text-anchor="middle" fill="#38c8e0" font-size="8.5" font-family="'Segoe UI',sans-serif" font-weight="700">NETWORK INTL</text>
+      <text x="247" y="572" text-anchor="middle" fill="#006b84" font-size="7.5" font-family="'Segoe UI',sans-serif">UAE · GCC · 3DS</text>
+      <!-- Card brand row -->
+      <rect x="114" y="590" width="174" height="22" rx="5" fill="rgba(255,255,255,0.03)" stroke="#635bff20" stroke-width="1"/>
+      <text x="128" y="605" fill="#635bff" font-size="9" font-family="'Segoe UI',sans-serif" font-weight="700">VISA</text>
+      <text x="167" y="605" text-anchor="middle" fill="#a78bfa" font-size="8.5" font-family="'Segoe UI',sans-serif">MC</text>
+      <text x="206" y="605" text-anchor="middle" fill="#a78bfa" font-size="8.5" font-family="'Segoe UI',sans-serif">AMEX</text>
+      <text x="248" y="605" text-anchor="middle" fill="#a78bfa" font-size="8" font-family="'Segoe UI',sans-serif"></text>
+      <text x="272" y="605" text-anchor="end" fill="#6366f1" font-size="9" font-family="'Segoe UI',sans-serif">Apple Pay</text>
+      <!-- Security badge -->
+      <rect x="114" y="622" width="174" height="20" rx="5" fill="rgba(74,222,128,0.05)" stroke="#4ade8025" stroke-width="1"/>
+      <text x="201" y="636" text-anchor="middle" fill="#4ade80" font-size="8" font-family="'Segoe UI',sans-serif">PCI-DSS · TLS 1.3 · Tokenisation</text>
+
+      <!-- ── Auth group ── -->
+      <rect x="318" y="504" width="174" height="150" rx="10" fill="rgba(245,166,35,0.06)" stroke="#f5a62328" stroke-width="1"/>
+      <text x="405" y="520" text-anchor="middle" fill="#f5a623" font-size="9" font-family="'Segoe UI',sans-serif" font-weight="700" letter-spacing="2">AUTHENTICATION</text>
+      <!-- Firebase card -->
+      <rect x="332" y="528" width="146" height="60" rx="8" fill="#120b00" stroke="#f5a62330" stroke-width="1"/>
+      <text x="405" y="550" text-anchor="middle" fill="#f5a623" font-size="20" font-family="'Segoe UI',sans-serif" font-weight="900">🔥</text>
+      <text x="405" y="566" text-anchor="middle" fill="#ffca28" font-size="8.5" font-family="'Segoe UI',sans-serif" font-weight="700">FIREBASE AUTH</text>
+      <text x="405" y="577" text-anchor="middle" fill="#a87020" font-size="7.5" font-family="'Segoe UI',sans-serif">Google · Apple</text>
+      <!-- Auth methods -->
+      <rect x="332" y="598" width="68" height="20" rx="5" fill="rgba(245,166,35,0.07)" stroke="#f5a62325" stroke-width="1"/>
+      <text x="366" y="612" text-anchor="middle" fill="#f5a623" font-size="8" font-family="'Segoe UI',sans-serif">Phone OTP</text>
+      <rect x="410" y="598" width="68" height="20" rx="5" fill="rgba(245,166,35,0.07)" stroke="#f5a62325" stroke-width="1"/>
+      <text x="444" y="612" text-anchor="middle" fill="#f5a623" font-size="8" font-family="'Segoe UI',sans-serif">Email / OAuth</text>
+      <!-- JWT row -->
+      <rect x="332" y="628" width="146" height="18" rx="5" fill="rgba(74,222,128,0.05)" stroke="#4ade8025" stroke-width="1"/>
+      <text x="405" y="641" text-anchor="middle" fill="#4ade80" font-size="7.5" font-family="'Segoe UI',sans-serif">JWT · Token refresh · Sessions</text>
+
+      <!-- ── CMS group ── -->
+      <rect x="508" y="504" width="300" height="150" rx="10" fill="rgba(73,69,255,0.06)" stroke="#4945ff28" stroke-width="1"/>
+      <text x="658" y="520" text-anchor="middle" fill="#7b79ff" font-size="9" font-family="'Segoe UI',sans-serif" font-weight="700" letter-spacing="2">CMS · CONTENT</text>
+      <!-- Strapi card -->
+      <rect x="522" y="528" width="130" height="60" rx="8" fill="#080720" stroke="#4945ff30" stroke-width="1"/>
+      <!-- Strapi logo (4 squares) -->
+      <rect x="562" y="536" width="9" height="9" rx="2" fill="#4945ff"/>
+      <rect x="574" y="536" width="9" height="9" rx="2" fill="#4945ff" opacity=".55"/>
+      <rect x="562" y="548" width="9" height="9" rx="2" fill="#4945ff" opacity=".55"/>
+      <rect x="574" y="548" width="9" height="9" rx="2" fill="#4945ff" opacity=".25"/>
+      <text x="587" y="545" fill="#7b79ff" font-size="10" font-family="'Segoe UI',sans-serif" font-weight="700"> Strapi</text>
+      <text x="587" y="558" fill="#4a4a99" font-size="8" font-family="'Segoe UI',sans-serif">Headless CMS</text>
+      <text x="587" y="569" fill="#3a3a77" font-size="7.5" font-family="'Segoe UI',sans-serif">REST · Media · i18n</text>
+      <!-- Content types -->
+      <rect x="522" y="598" width="60" height="20" rx="5" fill="rgba(73,69,255,0.08)" stroke="#4945ff25" stroke-width="1"/>
+      <text x="552" y="612" text-anchor="middle" fill="#7b79ff" font-size="7.5" font-family="'Segoe UI',sans-serif">Banners</text>
+      <rect x="590" y="598" width="60" height="20" rx="5" fill="rgba(73,69,255,0.08)" stroke="#4945ff25" stroke-width="1"/>
+      <text x="620" y="612" text-anchor="middle" fill="#7b79ff" font-size="7.5" font-family="'Segoe UI',sans-serif">Promotions</text>
+      <rect x="658" y="598" width="60" height="20" rx="5" fill="rgba(73,69,255,0.08)" stroke="#4945ff25" stroke-width="1"/>
+      <text x="688" y="612" text-anchor="middle" fill="#7b79ff" font-size="7.5" font-family="'Segoe UI',sans-serif">Listings</text>
+      <rect x="726" y="598" width="68" height="20" rx="5" fill="rgba(73,69,255,0.08)" stroke="#4945ff25" stroke-width="1"/>
+      <text x="760" y="612" text-anchor="middle" fill="#7b79ff" font-size="7.5" font-family="'Segoe UI',sans-serif">Deep links</text>
+      <!-- Delivery row -->
+      <rect x="522" y="628" width="272" height="18" rx="5" fill="rgba(74,222,128,0.04)" stroke="#4ade8022" stroke-width="1"/>
+      <text x="658" y="641" text-anchor="middle" fill="#4ade80" font-size="7.5" font-family="'Segoe UI',sans-serif">:kmm:data:cms  ←→  :kmm:service:deepLinking  ←→  featureFlag</text>
+
+      <!-- ══ CONNECTOR ARROWS lib → providers ══ -->
+      <!-- lib:network → Stripe -->
+      <line x1="148" y1="441" x2="155" y2="472" stroke="#f59e0b" stroke-width="1" stroke-opacity=".4" marker-end="url(#arr3)" stroke-dasharray="4 3"/>
+      <!-- lib:network → Network Intl -->
+      <line x1="252" y1="441" x2="247" y2="472" stroke="#f59e0b" stroke-width="1" stroke-opacity=".35" marker-end="url(#arr3)" stroke-dasharray="4 3"/>
+      <!-- lib:network → Firebase -->
+      <line x1="450" y1="441" x2="405" y2="472" stroke="#f59e0b" stroke-width="1" stroke-opacity=".35" marker-end="url(#arr3)" stroke-dasharray="4 3"/>
+      <!-- lib:network → Strapi -->
+      <line x1="564" y1="441" x2="620" y2="472" stroke="#f59e0b" stroke-width="1" stroke-opacity=".35" marker-end="url(#arr3)" stroke-dasharray="4 3"/>
+
+      <!-- bottom label -->
+      <text x="450" y="690" text-anchor="middle" fill="#00586f" font-size="9" font-family="'Segoe UI',sans-serif" opacity=".6" letter-spacing="2">100% KOTLIN · KMM · ANDROID + iOS</text>
+    </svg>
+  </div>
+
+  <!-- Arch Layers table -->
+  <div class="arch-wrap">
+    <div class="arch-layer al-ui">
+      <div class="arch-layer-label">UI Layer</div>
+      <div class="arch-layer-content">
+        <span class="arch-chip c-compose"><span class="arch-chip-dot" style="background:#38bdf8"></span>Jetpack Compose</span>
+        <span class="arch-chip c-swiftui"><span class="arch-chip-dot" style="background:#e879f9"></span>SwiftUI</span>
+        <span class="arch-chip c-mvi"><span class="arch-chip-dot" style="background:#fca5a5"></span>MVI Architecture</span>
+        <span class="arch-chip c-coroutines"><span class="arch-chip-dot" style="background:#86efac"></span>StateFlow / SharedFlow</span>
+      </div>
+    </div>
+    <div class="arch-layer al-kmm">
+      <div class="arch-layer-label">KMM Business</div>
+      <div class="arch-layer-content">
+        <span class="arch-chip c-kotlin"><span class="arch-chip-dot" style="background:#c4b5fd"></span>Kotlin Multiplatform</span>
+        <span class="arch-chip c-coroutines"><span class="arch-chip-dot" style="background:#86efac"></span>Kotlin Coroutines</span>
+        <span class="arch-chip c-kmm"><span class="arch-chip-dot" style="background:#4ade80"></span>ViewModels (shared)</span>
+        <span class="arch-chip c-kmm"><span class="arch-chip-dot" style="background:#4ade80"></span>Repositories</span>
+        <span class="arch-chip c-kmm"><span class="arch-chip-dot" style="background:#4ade80"></span>Use Cases</span>
+      </div>
+    </div>
+    <div class="arch-layer al-data">
+      <div class="arch-layer-label">Data Layer</div>
+      <div class="arch-layer-content">
+        <span class="arch-chip c-ktor"><span class="arch-chip-dot" style="background:#2dd4bf"></span>Ktor HTTP Client</span>
+        <span class="arch-chip c-serial"><span class="arch-chip-dot" style="background:#5eead4"></span>kotlinx.serialization</span>
+        <span class="arch-chip c-sqldelight"><span class="arch-chip-dot" style="background:#a78bfa"></span>SQLDelight</span>
+      </div>
+    </div>
+    <div class="arch-layer al-infra">
+      <div class="arch-layer-label">Infrastructure</div>
+      <div class="arch-layer-content">
+        <span class="arch-chip c-koin"><span class="arch-chip-dot" style="background:#fbbf24"></span>Koin DI (Multiplatform)</span>
+        <span class="arch-chip c-kotlin"><span class="arch-chip-dot" style="background:#c4b5fd"></span>Analytics</span>
+        <span class="arch-chip c-kotlin"><span class="arch-chip-dot" style="background:#c4b5fd"></span>Logger</span>
+        <span class="arch-chip c-kotlin"><span class="arch-chip-dot" style="background:#c4b5fd"></span>Tracker</span>
+        <span class="arch-chip c-kotlin"><span class="arch-chip-dot" style="background:#c4b5fd"></span>Feature Flags</span>
+        <span class="arch-chip c-kotlin"><span class="arch-chip-dot" style="background:#c4b5fd"></span>Deep Linking</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Library cards -->
+  <div class="lib-grid">
+    <div class="lib-card">
+      <div class="lib-header"><div class="lib-icon" style="background:#0c1f38;">🔵</div><div><div class="lib-name">Jetpack Compose</div><div class="lib-ver">Android UI</div></div></div>
+      <div class="lib-desc">Declarative UI toolkit for Android. All BENO Android screens are built entirely in Compose with a custom design system.</div>
+    </div>
+    <div class="lib-card">
+      <div class="lib-header"><div class="lib-icon" style="background:#1c0a1c;">🍎</div><div><div class="lib-name">SwiftUI</div><div class="lib-ver">iOS UI</div></div></div>
+      <div class="lib-desc">Declarative iOS UI framework. The iOS app consumes KMM ViewModels directly via the XCFramework.</div>
+    </div>
+    <div class="lib-card">
+      <div class="lib-header"><div class="lib-icon" style="background:#0a1a18;">🌐</div><div><div class="lib-name">Ktor</div><div class="lib-ver">HTTP Client · KMM</div></div></div>
+      <div class="lib-desc">Asynchronous HTTP client shared across Android and iOS. Handles all REST API calls with interceptors and auth tokens.</div>
+    </div>
+    <div class="lib-card">
+      <div class="lib-header"><div class="lib-icon" style="background:#0a1a18;">📦</div><div><div class="lib-name">kotlinx.serialization</div><div class="lib-ver">JSON Parsing · KMM</div></div></div>
+      <div class="lib-desc">Official Kotlin serialization library. Used alongside Ktor for type-safe JSON parsing across all platforms.</div>
+    </div>
+    <div class="lib-card">
+      <div class="lib-header"><div class="lib-icon" style="background:#1a0e2d;">🗄️</div><div><div class="lib-name">SQLDelight</div><div class="lib-ver">Database · KMM</div></div></div>
+      <div class="lib-desc">Type-safe SQL database with KMM support. Generates Kotlin APIs from .sq files, shared between Android and iOS.</div>
+    </div>
+    <div class="lib-card">
+      <div class="lib-header"><div class="lib-icon" style="background:#061c0c;">⚡</div><div><div class="lib-name">Kotlin Coroutines</div><div class="lib-ver">Async · KMM</div></div></div>
+      <div class="lib-desc">Structured concurrency for asynchronous programming. Used everywhere for network calls, database IO, and UI state.</div>
+    </div>
+    <div class="lib-card">
+      <div class="lib-header"><div class="lib-icon" style="background:#1a1000;">💉</div><div><div class="lib-name">Koin</div><div class="lib-ver">Dependency Injection · KMM</div></div></div>
+      <div class="lib-desc">Lightweight dependency injection framework with Kotlin Multiplatform support. Wires the entire app without code generation.</div>
+    </div>
+    <div class="lib-card">
+      <div class="lib-header"><div class="lib-icon" style="background:#160e2d;">🎯</div><div><div class="lib-name">Kotlin (100%)</div><div class="lib-ver">Language</div></div></div>
+      <div class="lib-desc">The entire codebase — Android, iOS business logic, data, and infrastructure — is written in Kotlin using KMM.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+<footer>
+  <p>© 2026 Beno Technologies FZ-LLC · Dubai Internet City, UAE · <a href="https://beno.com">beno.com</a></p>
+</footer>
+
+</body>
+</html>
